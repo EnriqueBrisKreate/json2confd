@@ -10,6 +10,10 @@ var IMPORTERS ImporterConstructors = ImporterConstructors{
 	"redis": ConstructRedisImporter,
 }
 
+var IMPORTERS_PORTS map[string]string = map[string]string{
+	"redis": "6379",
+}
+
 type ImporterConstructors map[string]func(*cli.Context) Importer
 
 type Importer interface {

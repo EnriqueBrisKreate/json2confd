@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"strconv"
+	"strings"
 )
 
 func FlattenReader(reader io.Reader, d string) (map[string]interface{}, error) {
@@ -134,4 +135,13 @@ func explodeMap(m map[string]interface{}, parent string, delimiter string) (map[
 		}
 	}
 	return j, nil
+}
+
+func ensurePort(address string, backend string) string {
+	if address != "" && strings.Contains(address, ":") == false {
+		if port, found := IMPORTERS_PORTS[backend]; found {
+			return address + ":" + port
+		}
+	}
+	return address
 }

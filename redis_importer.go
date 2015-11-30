@@ -10,7 +10,7 @@ import (
 )
 
 func ConstructRedisImporter(c *cli.Context) Importer {
-	server := c.String("node")
+	server := ensurePort(c.String("node"), "redis")
 	pool := &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
@@ -38,20 +38,18 @@ type RedisImporter struct {
 }
 
 func (r RedisImporter) Import(p map[string]interface{}) error {
-
 	prefix := ""
 	if len(r.prefix) > 0 && r.prefix != "/" {
 		prefix = "/" + strings.TrimSpace(strings.Trim(r.prefix, "/"))
 	}
 
 	for k, v := range p {
-
-		_, err := r.pool.Get().Do("SET", prefix + k, fmt.Sprint(v))
+		_, err := r.pool.Get().Do("SET", prefix+k, fmt.Sprint(v))
 		if err != nil {
 			return err
 		}
 
 	}
-	
+
 	return nil
 }

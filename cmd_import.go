@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"os"
 
@@ -16,7 +18,7 @@ var cmdImport cli.Command = cli.Command{
 			Usage: "key path prefix",
 		},
 		cli.StringFlag{
-			Name:  "json",
+			Name:  "file",
 			Value: "",
 			Usage: "json file to import. (if empty stdin will be used)",
 		},
@@ -31,21 +33,36 @@ var cmdImport cli.Command = cli.Command{
 			Usage: "address and port of the backend. ex: 127.0.0.1:6379",
 		},
 	},
-	Usage: "",
+	Usage: "Import the json into the specified backend",
 	Action: func(c *cli.Context) {
-		importer, err := ConstructImporter(c, IMPORTERS)
-		if err != nil {
-			log.Fatal(err)
-		}
-		f, err := os.Open(c.String("json"))
-		m, err := FlattenReader(f, "/")
-		if err != nil {
+		var err error
+		var importer Importer
+		var reader io.Reader
+		var flat map[string]interface{}
+
+		if importer, err = ConstructImporter(c, IMPORTERS); err != nil {
 			log.Fatal(err)
 		}
 
-		err = importer.Import(m)
-		if err != nil {
+		if reader, err = getJsonReader(c.String("file")); err != nil {
 			log.Fatal(err)
 		}
+
+		if flat, err = FlattenReader(reader, "/"); err != nil {
+			log.Fatal(err)
+		}
+
+		if err = importer.Import(flat); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("Success! Imported %v entries into %s(%s)\n", len(flat), c.String("backend"), c.String("node"))
 	},
+}
+
+func getJsonReader(file string) (io.Reader, error) {
+	if file == "" {
+		return os.Stdin, nil
+	} else {
+		return os.Open(file)
+	}
 }
