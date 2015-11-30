@@ -64,8 +64,8 @@ func (s *TestUtilSuite) TestFlattenJsonStrInvalidJSON(c *C) {
 	fmt.Println(res, err)
 }
 
-// Test calling FlattenJsonStr with s.json1
-func (s *TestUtilSuite) TestFlattenJsonStrJson1(c *C) {
+// Test calling explodeMap with s.json1
+func (s *TestUtilSuite) TestExplodeMapJson1(c *C) {
 	expected := map[string]interface{}{
 		"/name":           "myname",
 		"/age":            "23",
@@ -80,8 +80,8 @@ func (s *TestUtilSuite) TestFlattenJsonStrJson1(c *C) {
 	}
 }
 
-// Test calling FlattenJsonStr with s.json2
-func (s *TestUtilSuite) TestFlattenJsonStrJson2(c *C) {
+// Test calling explodeMap with s.json2
+func (s *TestUtilSuite) TestExplodeMapJson2(c *C) {
 	expected := map[string]interface{}{
 		"/description":       "a schema given for items",
 		"/schema/items/type": "integer",
