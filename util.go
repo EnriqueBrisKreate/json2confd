@@ -3,8 +3,13 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 )
+
+func main() {
+
+}
 
 // FlattenJson takes in a  nested JSON as a byte array and a delimiter and returns an
 // exploded/flattened json byte array
@@ -108,6 +113,8 @@ func explodeMap(m map[string]interface{}, parent string, delimiter string) (map[
 	for k, i := range m {
 		if len(parent) > 0 {
 			k = parent + delimiter + k
+		} else {
+			k = delimiter + k
 		}
 		switch v := i.(type) {
 		case nil:
@@ -121,14 +128,15 @@ func explodeMap(m map[string]interface{}, parent string, delimiter string) (map[
 		case bool:
 			j[k] = v
 		case []interface{}:
-			out := make(map[string]interface{})
-			out, err = explodeList(v, k, delimiter)
+
+			tmp, err := json.Marshal(v)
+
 			if err != nil {
 				return nil, err
 			}
-			for key, value := range out {
-				j[key] = value
-			}
+
+			j[k] = fmt.Sprintf("%s", tmp)
+
 		case map[string]interface{}:
 			out := make(map[string]interface{})
 			out, err = explodeMap(v, k, delimiter)
