@@ -1,5 +1,5 @@
 # json2confd
-Tool to store configuration on confd backends from a json file.
+Stores configuration on confd backends from a json file.
 
 ### Basic usage
 Given the following json file:
