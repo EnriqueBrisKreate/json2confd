@@ -1,6 +1,8 @@
 # json2confd
 Stores configuration on confd backends from a json file.
 
+[![Build Status](https://travis-ci.org/creativedrive/json2confd.svg)](https://travis-ci.org/creativedrive/json2confd)
+
 # Installation
 
 ### Binary Download
