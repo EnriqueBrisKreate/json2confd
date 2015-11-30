@@ -13,14 +13,14 @@ Currently json2confd ships binaries for OS X and Linux 32 and 64bit systems. You
 #### OS X
 
 ```
-wget -o /usr/local/bin/json2confd https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_darwin_amd64
+wget -O /usr/local/bin/json2confd https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_darwin_amd64
 chmod +x /usr/local/bin/json2confd
 ```
 
 #### Linux
 
 ```
-wget -o /usr/local/bin/json2confd https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_linux_amd64
+wget -O /usr/local/bin/json2confd https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_linux_amd64
 chmod +x /usr/local/bin/json2confd
 ```
 
