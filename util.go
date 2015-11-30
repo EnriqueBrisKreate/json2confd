@@ -7,10 +7,6 @@ import (
 	"strconv"
 )
 
-func main() {
-
-}
-
 // FlattenJson takes in a  nested JSON as a byte array and a delimiter and returns an
 // exploded/flattened json byte array
 func FlattenJson(b []byte, d string) ([]byte, error) {
