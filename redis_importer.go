@@ -6,10 +6,11 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/garyburd/redigo/redis"
+	"strings"
 )
 
 func ConstructRedisImporter(c *cli.Context) Importer {
-	server := c.String("backend")
+	server := c.String("node")
 	pool := &redis.Pool{
 		MaxIdle:     3,
 		IdleTimeout: 240 * time.Second,
@@ -37,7 +38,20 @@ type RedisImporter struct {
 }
 
 func (r RedisImporter) Import(p map[string]interface{}) error {
-	fmt.Println("Importing to redis")
-	fmt.Printf("%#v", p)
+
+	prefix := ""
+	if len(r.prefix) > 0 && r.prefix != "/" {
+		prefix = "/" + strings.TrimSpace(strings.Trim(r.prefix, "/"))
+	}
+
+	for k, v := range p {
+
+		_, err := r.pool.Get().Do("SET", prefix + k, fmt.Sprint(v))
+		if err != nil {
+			return err
+		}
+
+	}
+	
 	return nil
 }
