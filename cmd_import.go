@@ -10,6 +10,11 @@ var cmdImport cli.Command = cli.Command{
 	Name: "import",
 	Flags: []cli.Flag{
 		cli.StringFlag{
+			Name:  "prefix",
+			Value: "/",
+			Usage: "key path prefix",
+		},
+		cli.StringFlag{
 			Name:  "json",
 			Value: "",
 			Usage: "json file to import. (if empty stdin will be used)",
@@ -22,7 +27,7 @@ var cmdImport cli.Command = cli.Command{
 		cli.StringFlag{
 			Name:  "node",
 			Value: "",
-			Usage: "",
+			Usage: "address and port of the backend. ex: 127.0.0.1:6379",
 		},
 	},
 	Usage: "",
