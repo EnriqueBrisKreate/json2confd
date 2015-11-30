@@ -5,7 +5,7 @@ Stores configuration on confd backends from a json file.
 
 ### Binary Download
 
-Currently confd ships binaries for OS X and Linux 64bit systems. You can download the latest release from [GitHub](https://github.com/creativedrive/json2confd/releases)
+Currently json2confd ships binaries for OS X and Linux 32 and 64bit systems. You can download the latest release from [GitHub](https://github.com/creativedrive/json2confd/releases)
 
 #### OS X
 
