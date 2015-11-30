@@ -71,11 +71,12 @@ func (s *TestUtilSuite) TestExplodeMapJson1(c *C) {
 		"/age":            "23",
 		"/like_chocolate": "false",
 	}
+
 	res, err := explodeMap(s.map1, "", "/")
 	c.Assert(err, IsNil)
 	for k, v := range expected {
 		_, key_exists := res[k]
-		c.Assert(key_exists, Equals, true)
+		c.Assert(key_exists, Equals, true, Commentf("key: %#v, not found on res", k))
 		c.Assert(fmt.Sprint(res[k]), Equals, v, Commentf("for k: %#v, result should be: %#v", k, v))
 	}
 }
@@ -99,7 +100,7 @@ func (s *TestUtilSuite) TestExplodeMapJson2(c *C) {
 	c.Assert(err, IsNil)
 	for k, v := range expected {
 		_, key_exists := res[k]
-		c.Assert(key_exists, Equals, true)
-		c.Assert(fmt.Sprint(res[k]), Equals, v, Commentf("for k: %#v, result should be: %#v", k, v))
+		c.Assert(key_exists, Equals, true, Commentf("key: %#v, not found on res ... %#v", k, res))
+		c.Assert(fmt.Sprint(res[k]), Equals, v, Commentf("for k: %#v, result should be: %#v ... %#v", k, v, res[k]))
 	}
 }
