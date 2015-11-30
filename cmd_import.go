@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"os"
 
 	"github.com/codegangsta/cli"
 )
@@ -34,12 +35,17 @@ var cmdImport cli.Command = cli.Command{
 	Action: func(c *cli.Context) {
 		importer, err := ConstructImporter(c, IMPORTERS)
 		if err != nil {
-			fmt.Println(err)
-			return
+			log.Fatal(err)
+		}
+		f, err := os.Open(c.String("json"))
+		m, err := FlattenReader(f, "/")
+		if err != nil {
+			log.Fatal(err)
 		}
 
-		importer.Import(map[string]interface{}{
-			"name": "myname",
-		})
+		err = importer.Import(m)
+		if err != nil {
+			log.Fatal(err)
+		}
 	},
 }

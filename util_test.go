@@ -59,9 +59,8 @@ func (s *TestUtilSuite) SetUpTest(c *C) {
 // Test calling FlattenJsonStr with an invalid json
 func (s *TestUtilSuite) TestFlattenJsonStrInvalidJSON(c *C) {
 	res, err := FlattenJsonStr("This is an invalid json", "/")
-	c.Assert(res, Equals, "")
-	c.Assert(res, NotNil)
-	fmt.Println(res, err)
+	c.Assert(res, IsNil)
+	c.Assert(err, NotNil)
 }
 
 // Test calling explodeMap with s.json1

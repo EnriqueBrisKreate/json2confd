@@ -2,43 +2,30 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"strconv"
 )
 
+func FlattenReader(reader io.Reader, d string) (map[string]interface{}, error) {
+	contents, err := ioutil.ReadAll(reader)
+	if err != nil {
+		return nil, err
+	}
+	return FlattenJson(contents, d)
+}
+
 // FlattenJson takes in a  nested JSON as a byte array and a delimiter and returns an
 // exploded/flattened json byte array
-func FlattenJson(b []byte, d string) ([]byte, error) {
-	var input interface{}
-	var exploded map[string]interface{}
-	var out []byte
+func FlattenJson(b []byte, d string) (map[string]interface{}, error) {
+	var input map[string]interface{}
 	var err error
 	err = json.Unmarshal(b, &input)
 	if err != nil {
 		return nil, err
 	}
-	switch t := input.(type) {
-	case map[string]interface{}:
-		exploded, err = explodeMap(t, "", d)
-		if err != nil {
-			return nil, err
-		}
-	case []interface{}:
-		exploded, err = explodeList(t, "", d)
-		if err != nil {
-			return nil, err
-		}
-	default:
-		// How did we get here? It is impossible!!
-		return nil, errors.New("Possible error in JSON")
-	}
-	out, err = json.Marshal(exploded)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-
+	return explodeMap(input, "", d)
 }
 
 // FlattenJsonStr explodes a nested JSON string to an unnested one
@@ -48,13 +35,13 @@ func FlattenJson(b []byte, d string) ([]byte, error) {
 // {"person":{"name":"Joe", "address":{"street":"123 Main St."}}}
 // explodes to:
 // {"person.name":"Joe", "person.address.street":"123 Main St."}
-func FlattenJsonStr(s string, d string) (string, error) {
+func FlattenJsonStr(s string, d string) (map[string]interface{}, error) {
 	b := []byte(s)
 	out, err := FlattenJson(b, d)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return string(out), nil
+	return out, nil
 }
 
 func explodeList(l []interface{}, parent string, delimiter string) (map[string]interface{}, error) {
