@@ -2,6 +2,7 @@
 Stores configuration on confd backends from a json file.
 
 [![Build Status](https://travis-ci.org/creativedrive/json2confd.svg)](https://travis-ci.org/creativedrive/json2confd)
+[![Coverage Status](https://coveralls.io/repos/creativedrive/json2confd/badge.svg?branch=master&service=github)](https://coveralls.io/github/creativedrive/json2confd?branch=master)
 
 # Installation
 
