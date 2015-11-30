@@ -1,6 +1,25 @@
 # json2confd
 Stores configuration on confd backends from a json file.
 
+# Installation
+
+### Binary Download
+
+Currently confd ships binaries for OS X and Linux 64bit systems. You can download the latest release from [GitHub](https://github.com/creativedrive/json2confd/releases)
+
+#### OS X
+
+```
+$ wget https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_darwin_amd64
+```
+
+#### Linux
+
+```
+$ wget https://github.com/creativedrive/json2confd/releases/download/0.1/json2confd_linux_amd64
+```
+
+
 ### Basic usage
 Given the following json file:
 ```
