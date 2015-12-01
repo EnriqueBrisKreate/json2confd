@@ -57,13 +57,16 @@ The redis backend will have the following keys:
 ```
 
 
-### Testing
-To run all tests:
+### Developing
+Dependencies are managed with [gb](http://getgb.io/).
+To build:
 ```
-go test
+gb build
 ```
-To run a specific test:
+The binary will be created on ./bin/json2confd
+
+To run the tests:
 ```
-go test -check.f "TestFlattenJsonStrJson1"
+gb test
 ```
 
