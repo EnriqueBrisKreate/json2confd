@@ -2,6 +2,19 @@
 	"version": 0,
 	"dependencies": [
 		{
+			"importpath": "github.com/axw/gocov",
+			"repository": "https://github.com/axw/gocov",
+			"revision": "ee50de317d9f9f067b90d8b7e144f2f7931a997a",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/axw/gocov/gocov",
+			"repository": "https://github.com/axw/gocov",
+			"revision": "ee50de317d9f9f067b90d8b7e144f2f7931a997a",
+			"branch": "master",
+			"path": "/gocov"
+		},
+		{
 			"importpath": "github.com/codegangsta/cli",
 			"repository": "https://github.com/codegangsta/cli",
 			"revision": "0302d3914d2a6ad61404584cdae6e6dbc9c03599",
@@ -20,6 +33,38 @@
 			"revision": "6ece6e0a09f28cc399b21550cbf37ab39ba63cce",
 			"branch": "master",
 			"path": "/redis"
+		},
+		{
+			"importpath": "github.com/mattn/goveralls",
+			"repository": "https://github.com/mattn/goveralls",
+			"revision": "7e68e2744ddc213f56b3111846cbf037dda4aec7",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/pborman/uuid",
+			"repository": "https://github.com/pborman/uuid",
+			"revision": "cccd189d45f7ac3368a0d127efb7f4d08ae0b655",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/tools/cmd/cover",
+			"repository": "https://go.googlesource.com/tools",
+			"revision": "fff8fd7b194011cfedeafda246f0bfc275abb904",
+			"branch": "master",
+			"path": "/cmd/cover"
+		},
+		{
+			"importpath": "golang.org/x/tools/cover",
+			"repository": "https://go.googlesource.com/tools",
+			"revision": "fff8fd7b194011cfedeafda246f0bfc275abb904",
+			"branch": "master",
+			"path": "/cover"
+		},
+		{
+			"importpath": "gopkg.in/check.v1",
+			"repository": "https://gopkg.in/check.v1",
+			"revision": "11d3bc7aa68e238947792f30573146a3231fc0f1",
+			"branch": "master"
 		}
 	]
 }
