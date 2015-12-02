@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -144,4 +145,15 @@ func ensurePort(address string, backend string) string {
 		}
 	}
 	return address
+}
+
+func beautifyKeys(keys []string) (ret string) {
+
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		ret += fmt.Sprintf("\t%q,\n", k)
+	}
+
+	return "\nkeys = [\n" + ret + "]\n"
 }

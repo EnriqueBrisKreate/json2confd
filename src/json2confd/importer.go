@@ -17,7 +17,7 @@ var IMPORTERS_PORTS map[string]string = map[string]string{
 type ImporterConstructors map[string]func(*cli.Context) Importer
 
 type Importer interface {
-	Import(map[string]interface{}) error
+	Import(map[string]interface{}) (err error, keys []string)
 }
 
 func ConstructImporter(c *cli.Context, importers ImporterConstructors) (Importer, error) {

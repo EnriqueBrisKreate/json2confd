@@ -37,19 +37,26 @@ type RedisImporter struct {
 	prefix string
 }
 
-func (r RedisImporter) Import(p map[string]interface{}) error {
+func (r RedisImporter) Import(p map[string]interface{}) (err error, keys []string) {
+	err = nil
+
 	prefix := ""
 	if len(r.prefix) > 0 && r.prefix != "/" {
 		prefix = "/" + strings.TrimSpace(strings.Trim(r.prefix, "/"))
 	}
 
+	keys = make([]string, len(p))
+	i := 0
+
 	for k, v := range p {
 		_, err := r.pool.Get().Do("SET", prefix+k, fmt.Sprint(v))
 		if err != nil {
-			return err
+			return err, nil
 		}
 
+		keys[i] = k
+		i++
 	}
 
-	return nil
+	return
 }
