@@ -139,7 +139,7 @@ func explodeMap(m map[string]interface{}, parent string, delimiter string) (map[
 
 func ensurePort(address string, backend string) string {
 	if address != "" && strings.Contains(address, ":") == false {
-		if port, found := IMPORTERS_PORTS[backend]; found {
+		if port, found := BACKEND_PORTS[backend]; found {
 			return address + ":" + port
 		}
 	}

@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"time"
 
 	"github.com/codegangsta/cli"
 )
@@ -12,6 +13,15 @@ import (
 var cmdImport cli.Command = cli.Command{
 	Name: "import",
 	Flags: []cli.Flag{
+		cli.BoolFlag{
+			Name:  "onetime",
+			Usage: "Run once or keeps watching the json file for changes.",
+		},
+		cli.IntFlag{
+			Name:  "interval",
+			Value: 60,
+			Usage: "Number of seconds in which the file will be checked for changes.",
+		},
 		cli.StringFlag{
 			Name:  "prefix",
 			Value: "/",
@@ -35,27 +45,32 @@ var cmdImport cli.Command = cli.Command{
 	},
 	Usage: "Import the json into the specified backend",
 	Action: func(c *cli.Context) {
-		var err error
-		var importer Importer
-		var reader io.Reader
-		var flat map[string]interface{}
-
-		if importer, err = ConstructImporter(c, IMPORTERS); err != nil {
+		interval, err := time.ParseDuration(fmt.Sprint(c.Int("interval")) + "s")
+		if err != nil {
 			log.Fatal(err)
 		}
 
-		if reader, err = getJsonReader(c.String("file")); err != nil {
-			log.Fatal(err)
+		ip := ImportParams{
+			onetime:  c.Bool("onetime"),
+			interval: interval,
+			prefix:   c.String("prefix"),
+			file:     c.String("file"),
+			backend:  c.String("backend"),
+			node:     c.String("node"),
+		}
+		if ip.onetime == true {
+			err = BasicImporter{}.Import(ip)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			err = ContinuousImporter{}.Import(ip)
+			if err != nil {
+				log.Println(err)
+			}
 		}
 
-		if flat, err = FlattenReader(reader, "/"); err != nil {
-			log.Fatal(err)
-		}
-
-		if err = importer.Import(flat); err != nil {
-			log.Fatal(err)
-		}
-		fmt.Printf("Success! Imported %v entries into %s(%s)\n", len(flat), c.String("backend"), c.String("node"))
+		//fmt.Printf("Success! Imported %v entries into %s(%s)\n", len(flat), ip.backend, ip.node)
 	},
 }
 
