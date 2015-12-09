@@ -9,17 +9,22 @@ type OutputData struct {
 	Keys []string `json:"keys"`
 }
 
-func Output(data OutputData, outputFormat string) {
+func Output(data OutputData, outputFormat string) (err error) {
 	switch outputFormat {
 	case "json":
-		outputJson(data)
+		err = outputJson(data)
 	}
+
+	return
 }
 
-func outputJson(data OutputData) {
+func outputJson(data OutputData) error {
 	if retJson, err := json.Marshal(data); err != nil {
-		panic(err)
+		return err
 	} else {
+		// TODO :: outputs to the io.Writer
 		fmt.Printf("%s\n", retJson)
 	}
+
+	return nil
 }

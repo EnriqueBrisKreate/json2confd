@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -147,12 +146,7 @@ func ensurePort(address string, backend string) string {
 	return address
 }
 
-func jsonToMap(file string) (flat map[string]interface{}, err error) {
-	var reader io.Reader
-
-	if reader, err = os.Open(file); err != nil {
-		return
-	}
+func jsonToMap(reader io.Reader) (flat map[string]interface{}, err error) {
 
 	if bytes, err := ioutil.ReadAll(reader); err != nil {
 		return nil, err
@@ -164,5 +158,4 @@ func jsonToMap(file string) (flat map[string]interface{}, err error) {
 			return flat, nil
 		}
 	}
-
 }
