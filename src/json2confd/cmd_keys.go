@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/codegangsta/cli"
 	"io"
+	"log"
 	"os"
 )
 
@@ -22,34 +23,24 @@ var cmdKeys cli.Command = cli.Command{
 	},
 	Usage: "Output the keys to be imported",
 	Action: func(c *cli.Context) {
-
-		var reader io.Reader
-		var err error
+		var (
+			reader   io.Reader
+			output   outputData
+			outputer outputer
+			err      error
+		)
 
 		if reader, err = os.Open(c.String("file")); err != nil {
-			// TODO :: outputs the error to the io.Writer
-		} else {
-
-			if file_map, err := jsonToMap(reader); err != nil {
-				// TODO :: outputs the error to the io.Writer
-			} else {
-				keys := make([]string, len(file_map))
-				i := 0
-				for k := range file_map {
-					keys[i] = k
-					i = i + 1
-				}
-
-				output := OutputData{
-					Keys: keys,
-				}
-
-				if err := Output(output, c.String("output")); err != nil {
-					// TODO :: outputs the error to the io.Writer
-
-				}
-			}
+			log.Fatal(err)
 		}
+		if output, err = extractKeys(reader); err != nil {
+			log.Fatal(err)
+		}
+		if outputer, err = getOutputer(c.String("output")); err != nil {
+			log.Fatal(err)
+		}
+
+		outputer.output(output, c.App.Writer)
 
 	},
 }
