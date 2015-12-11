@@ -11,7 +11,7 @@ func (j jsonOutputer) output(data outputData, writer io.Writer) error {
 	if retJson, err := json.Marshal(data); err != nil {
 		return err
 	} else {
-		_, err:= writer.Write(retJson)
+		_, err := writer.Write(retJson)
 		return err
 	}
 }

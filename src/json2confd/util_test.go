@@ -3,9 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"testing"
 	. "gopkg.in/check.v1"
 	"strings"
+	"testing"
 )
 
 // Hook up gocheck into the "go test" runner.
@@ -177,7 +177,7 @@ func (s *TestUtilSuite) TestMyDeepMapEqual_SameLenButDifferentContent(c *C) {
 		"/test3/data/foo":    "bar",
 		"/test3/description": "ignores non-arrays",
 		"/test1/description": "valid items",
-		"/description_new":       "a schema given for items",
+		"/description_new":   "a schema given for items",
 		"/schema/items/type": 12345,
 		"/test2/valid":       "false",
 		"/test1/data":        "[1,2,3]",

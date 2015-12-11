@@ -1,8 +1,8 @@
 package main
 
 import (
-	"io"
 	"errors"
+	"io"
 )
 
 type outputData struct {
@@ -14,7 +14,6 @@ type outputData struct {
 type outputer interface {
 	output(data outputData, writer io.Writer) error
 }
-
 
 func getOutputer(format string) (outputer, error) {
 	switch format {
