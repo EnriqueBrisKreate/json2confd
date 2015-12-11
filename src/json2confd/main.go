@@ -12,6 +12,7 @@ func main() {
 	app.Usage = ""
 	app.Commands = []cli.Command{
 		cmdImport,
+		cmdKeys,
 	}
 
 	app.Run(os.Args)

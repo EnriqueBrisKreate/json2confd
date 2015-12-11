@@ -145,3 +145,42 @@ func ensurePort(address string, backend string) string {
 	}
 	return address
 }
+
+func jsonToMap(reader io.Reader) (flat map[string]interface{}, err error) {
+	if bytes, err := ioutil.ReadAll(reader); err != nil {
+		return nil, err
+	} else {
+
+		if flat, err = FlattenJson(bytes, "/"); err != nil {
+			return nil, err
+		} else {
+			return flat, nil
+		}
+	}
+}
+
+// reflect.DeepEqual() does not work as expected with maps (except in those maps with the keys&values in the exact same sort)
+func myDeepMapEqual(m1 map[string]interface{}, m2 map[string]interface{}) bool {
+	if m1 == nil && m2 != nil || m1 != nil && m2 == nil {
+		return false
+	}
+
+	if len(m1) != len(m2) {
+		return false
+	}
+
+	for k, v := range m1 {
+		_, key_exists := m2[k]
+		if !key_exists {
+			// key does not exist
+			return false
+		}
+
+		if fmt.Sprintf("%s", fmt.Sprintf("%v", v)) != fmt.Sprintf("%s", fmt.Sprintf("%v", m2[k])) {
+			// different values
+			return false
+		}
+	}
+
+	return true
+}
