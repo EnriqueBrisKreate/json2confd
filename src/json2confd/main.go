@@ -8,7 +8,7 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "json2consul"
+	app.Name = "json2confd"
 	app.Usage = ""
 	app.Commands = []cli.Command{
 		cmdImport,
